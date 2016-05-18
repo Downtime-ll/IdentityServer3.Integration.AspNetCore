@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Owin;
 
-namespace Microsoft.AspNet.Builder
+namespace Microsoft.AspNetCore.Builder
 {
+    using Builder;
     using DataProtectionProviderDelegate = Func<string[], Tuple<Func<byte[], byte[]>, Func<byte[], byte[]>>>;
     using DataProtectionTuple = Tuple<Func<byte[], byte[]>, Func<byte[], byte[]>>;
 
@@ -19,7 +20,7 @@ namespace Microsoft.AspNet.Builder
                 addToPipeline(next =>
                 {
                     var builder = new Microsoft.Owin.Builder.AppBuilder();
-                    var provider = app.ApplicationServices.GetRequiredService<DataProtection.IDataProtectionProvider>();
+                    var provider = app.ApplicationServices.GetRequiredService<AspNetCore.DataProtection.IDataProtectionProvider>();
 
                     builder.Properties["security.DataProtectionProvider"] = new DataProtectionProviderDelegate(purposes =>
                     {
